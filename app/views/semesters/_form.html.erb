@@ -1,0 +1,25 @@
+<%= form_for(@semester) do |f| %>
+  <% if @semester.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@semester.errors.count, "error") %> prohibited this semester from being saved:</h2>
+
+      <ul>
+      <% @semester.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :semester_name %><br>
+    <%= f.text_field :semester_name %>
+  </div>
+  <div class="field">
+    <%= f.label :semester_type %><br>
+    <%= f.text_field :semester_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
