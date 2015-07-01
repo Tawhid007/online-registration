@@ -16,9 +16,11 @@
       <tr>
         <td><%= semester.semester_name %></td>
         <td><%= semester.semester_type %></td>
-        <td><%= link_to 'Show', semester %></td>
-        <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
-        <td><%= link_to 'Destroy', semester, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin %>
+            <td><%= link_to 'Show', semester %></td>
+            <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
+            <td><%= link_to 'Destroy', semester, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

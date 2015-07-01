@@ -12,13 +12,18 @@
   </thead>
 
   <tbody>
+
     <% @courses.each do |course| %>
       <tr>
         <td><%= course.course_name %></td>
         <td><%= course.course_no %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin %>
+            <td><%= link_to 'Show', course %></td>
+            <td><%= link_to 'Edit', edit_course_path(course) %></td>
+            <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%else%>
+            <td><%= link_to 'Register', course %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
