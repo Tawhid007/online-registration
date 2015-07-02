@@ -1,6 +1,6 @@
 class Register < ActiveRecord::Base
-  validates :cgpa,allow_blank: true, :numericality => { :greater_than_or_equal_to => 0.00, :less_than_or_equal_to => 4.00 }, on: :create
-  validate :course_unique_for_each_user, on: [:create, :update]
+  validates :cgpa,allow_blank: true, :numericality => { :greater_than_or_equal_to => 0.00, :less_than_or_equal_to => 4.00 }, on: [:create, :update]
+  validate :course_unique_for_each_user, on: :create
 
   belongs_to :course
   belongs_to :semester

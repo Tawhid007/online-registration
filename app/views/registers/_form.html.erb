@@ -22,6 +22,12 @@
       <%= f.select(:semester_id,options_from_collection_for_select(Semester.all, :id, :semester_name))%>
     </div>
 
+    <% if current_user.admin %>
+        <div class="field">
+          <%= f.label :cgpa %><br>
+          <%= f.text_field :cgpa%>
+        </div>
+    <% end %>
     <div class="actions">
       <%= f.submit %>
     </div>

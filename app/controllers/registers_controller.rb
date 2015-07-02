@@ -29,7 +29,7 @@ class RegistersController < ApplicationController
   # POST /registers.json
   def create
     @register = Register.new(register_params)
-
+    #@register = Register.find(id) || Register.new
     respond_to do |format|
       if @register.save
         format.html { redirect_to @register, notice: 'Register was successfully created.' }
@@ -77,6 +77,6 @@ class RegistersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def register_params
-      params.require(:register).permit(:user_id, :course_id, :semester_id)
+      params.require(:register).permit(:user_id, :course_id, :semester_id, :cgpa)
     end
 end
