@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  resources :registers
   #get '/registrations', to: 'registrations#index'
 
   #get '/registrations/:id', to: 'registrations#show'
-  devise_for :users
-  resources :registrations
+  devise_for :users, controllers: { registrations: "user/registrations" }
+  resources :registers
   resources :courses
   resources :semesters
   # The priority is based upon order of creation: first created -> highest priority.

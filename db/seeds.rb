@@ -28,3 +28,14 @@ Course.delete_all
 course_list.each do |name, no|
   Course.create!( course_name: name, course_no: no )
 end
+
+
+User.create! :email => 'admin@mail.com', :password => '12345678', :password_confirmation => '12345678', :admin => true
+User.create! :email => 's1@mail.com', :password => '12345678', :password_confirmation => '12345678', :admin => false
+User.create! :email => 's2@mail.com', :password => '12345678', :password_confirmation => '12345678', :admin => false
+User.create! :email => 's3@mail.com', :password => '12345678', :password_confirmation => '12345678', :admin => false
+
+Register.create!(user_id: 2, course_id: 1, semester_id: 1, cgpa: 3.50)
+Register.create!(user_id: 3, course_id: 2, semester_id: 1, cgpa: 3.45)
+Register.create!(user_id: 4, course_id: 3, semester_id: 2, cgpa: 3.65)
+Register.create!(user_id: 4, course_id: 2, semester_id: 1, cgpa: 3.33)
