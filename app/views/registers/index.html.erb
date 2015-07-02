@@ -1,7 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+
+
 <% if current_user.admin %>
     <h1>All the Registrations listed below:</h1>
+    <%= form_tag registers_path, method: 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search]%>
+          <%= submit_tag "Search",name: nil %>
+        </p>
+    <% end %>
 <% else %>
     <h1>Your Registered courses are listed below:</h1>
 <% end %>

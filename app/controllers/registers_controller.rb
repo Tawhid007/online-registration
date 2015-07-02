@@ -5,7 +5,11 @@ class RegistersController < ApplicationController
   # GET /registers.json
   def index
     if(current_user.admin)
-      @registers = Register.all
+      if params[:search]
+        @registers = Register.joins(:semester).where('semesters.semester_name LIKE ?', params[:search]+"%")
+      else
+        @registers = Register.all
+      end
     else
       @registers = Register.where(user_id: current_user.id)
     end
