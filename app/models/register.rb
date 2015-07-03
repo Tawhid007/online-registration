@@ -9,7 +9,7 @@ class Register < ActiveRecord::Base
   #Validating so that use can not register the same course twice.
   def course_unique_for_each_user
     number = Register.where('course_id = ? and user_id = ?', course_id, user_id).length
-    if(number=1)
+    if(number == 1)
       errors.add(:course_id, "is already registered.")
     end
   end

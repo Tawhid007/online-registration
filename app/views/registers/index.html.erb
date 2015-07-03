@@ -4,7 +4,7 @@
 
 <% if current_user.admin %>
     <h1>All the Registrations listed below:</h1>
-    <%= form_tag registers_path, method: 'get' do %>
+    <%= form_tag registers_path, method: 'get',remote: true do %>
         <p>
           <%= text_field_tag :search, params[:search]%>
           <%= submit_tag "Search",name: nil %>
@@ -15,7 +15,7 @@
 <% end %>
 
 
-<table>
+<table id="register_list">
   <thead>
     <tr>
       <th>Course name</th>
@@ -27,21 +27,7 @@
   </thead>
 
   <tbody>
-    <% @registers.each do |register| %>
-    <tr>
-      <td><%= register.course.course_name%></td>
-      <td><%= register.semester.semester_name %></td>
-      <td><%= register.user.email %></td>
-      <td><%= register.cgpa %></td>
-      <% if current_user.admin %>
-          <td><%= link_to 'Show', register %></td>
-          <td><%= link_to 'Edit', edit_register_path(register) %></td>
-          <td><%= link_to 'Destroy', register, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <%end%>
-
-
-    </tr>
-    <% end %>
+    <%= render(@registers)%>
   </tbody>
 </table>
 

@@ -7,12 +7,18 @@ class RegistersController < ApplicationController
     if(current_user.admin)
       if params[:search]
         @registers = Register.joins(:semester).where('semesters.semester_name LIKE ?', params[:search]+"%")
+        respond_to do |format|
+          format.js {}
+        end
       else
         @registers = Register.all
       end
     else
       @registers = Register.where(user_id: current_user.id)
     end
+
+
+
   end
 
   # GET /registers/1
