@@ -1,12 +1,14 @@
 class RegistersController < ApplicationController
   before_action :set_register, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /registers
   # GET /registers.json
   def index
     if(current_user.admin)
       if params[:search]
-        @registers = Register.joins(:semester).where('semesters.semester_name LIKE ?', params[:search]+"%")
+        #@registers = Register.joins(:semester).where('semesters.semester_name LIKE ?', "%"+params[:search]+"%")|Register.joins(:course).where('courses.course_name LIKE ?', "%"+params[:search]+"%")
+        @registers = Register.joins(:semester).where('semesters.semester_name LIKE ?',"%"+params[:search]+"%")|Register.joins(:user).where('users.email LIKE ?', "%"+params[:search]+"%")
         respond_to do |format|
           format.js {}
         end
@@ -14,7 +16,15 @@ class RegistersController < ApplicationController
         @registers = Register.all
       end
     else
+      if params[:search]
+        @registers = Register.joins(:semester).where('user_id = ? and semesters.semester_name LIKE ?', current_user.id,"%"+params[:search]+"%")|Register.joins(:course).where('user_id=? and courses.course_name LIKE ?', current_user.id,"%"+params[:search]+"%")
+        respond_to do |format|
+          format.js {}
+        end
+      else
       @registers = Register.where(user_id: current_user.id)
+      end
+
     end
 
 

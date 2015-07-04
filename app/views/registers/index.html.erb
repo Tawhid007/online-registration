@@ -6,12 +6,18 @@
     <h1>All the Registrations listed below:</h1>
     <%= form_tag registers_path, method: 'get',remote: true do %>
         <p>
-          <%= text_field_tag :search, params[:search]%>
+          <%= text_field_tag :search, params[:search],placeholder: "Search by Semester name or Student email",size: 30%>
           <%= submit_tag "Search",name: nil %>
         </p>
     <% end %>
 <% else %>
     <h1>Your Registered courses are listed below:</h1>
+    <%= form_tag registers_path, method: 'get',remote: true do %>
+        <p>
+          <%= text_field_tag :search, params[:search],placeholder: "Search by Course or Semester name",size: 25%>
+          <%= submit_tag "Search",name: nil %>
+        </p>
+    <% end %>
 <% end %>
 
 
@@ -34,3 +40,5 @@
 <br>
 
 <%= link_to 'Register new courses', new_register_path %>
+<div><%= link_to 'View semester history', semesters_path %></div>
+

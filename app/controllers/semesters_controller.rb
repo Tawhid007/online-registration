@@ -1,11 +1,24 @@
 class SemestersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_semester, only: [:show, :edit, :update, :destroy]
+  before_action :student_restrict , restrict: [:new, :edit]
 
   # GET /semesters
   # GET /semesters.json
   def index
     @semesters = Semester.all
+    gpa= Register.joins(:user).joins(:semester).where('user_id = ?',current_user.id).pluck(:cgpa)
+    gpa.delete(nil)
+    @cgpa= gpa.inject(0){|sum,i| sum+i} / gpa.size
+    @gpa= {}
+    # @value=0;
+    @semesters.each do |semester|
+      temp=Register.joins(:user).joins(:semester).where('user_id = ? and semesters.semester_name=?',4,"#{semester.semester_name}").pluck(:cgpa)
+      temp.delete(nil)
+      as= temp.inject(0){|sum,i| sum+i} / temp.size if temp.present?
+      @gpa[semester.semester_name] = as
+
+    end
   end
 
   # GET /semesters/1
@@ -66,6 +79,10 @@ class SemestersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_semester
       @semester = Semester.find(params[:id])
+    end
+
+    def student_restrict
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
