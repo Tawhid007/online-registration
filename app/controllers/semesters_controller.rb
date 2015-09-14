@@ -7,17 +7,18 @@ class SemestersController < ApplicationController
   # GET /semesters.json
   def index
     @semesters = Semester.all
-    gpa= Register.joins(:user).joins(:semester).where('user_id = ?',current_user.id).pluck(:cgpa)
-    gpa.delete(nil)
-    @cgpa= gpa.inject(0){|sum,i| sum+i} / gpa.size
-    @gpa= {}
-    # @value=0;
-    @semesters.each do |semester|
-      temp=Register.joins(:user).joins(:semester).where('user_id = ? and semesters.semester_name=?',4,"#{semester.semester_name}").pluck(:cgpa)
-      temp.delete(nil)
-      as= temp.inject(0){|sum,i| sum+i} / temp.size if temp.present?
-      @gpa[semester.semester_name] = as
-
+    unless current_user.admin
+      gpa= Register.joins(:user).joins(:semester).where('user_id = ?',current_user.id).pluck(:cgpa)
+      gpa.delete(nil)
+      @cgpa= gpa.inject(0){|sum,i| sum+i} / gpa.size
+      @gpa= {}
+      # @value=0;
+      @semesters.each do |semester|
+        temp=Register.joins(:user).joins(:semester).where('user_id = ? and semesters.semester_name=?',4,"#{semester.semester_name}").pluck(:cgpa)
+        temp.delete(nil)
+        as= temp.inject(0){|sum,i| sum+i} / temp.size if temp.present?
+        @gpa[semester.semester_name] = as
+      end
     end
   end
 

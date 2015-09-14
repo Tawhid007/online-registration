@@ -8,7 +8,9 @@
     <tr>
       <th>Semester name</th>
       <th>Semester type</th>
-      <th>Semester CGPA</th>
+      <% unless current_user.admin %>
+        <th>Semester CGPA</th>
+      <% end %>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,7 +20,9 @@
       <tr>
         <td><%= semester.semester_name %></td>
         <td><%= semester.semester_type %></td>
-        <td><%= @gpa[semester.semester_name] %></td>
+        <% unless current_user.admin %>
+            <td><%= @gpa[semester.semester_name] %></td>
+        <% end %>
 
         <% if current_user.admin %>
             <td><%= link_to 'Show', semester %></td>
@@ -29,9 +33,9 @@
     <% end %>
   </tbody>
 </table>
-
-<div>Your CGPA is <%= @cgpa %></div>
-
+<% unless current_user.admin %>
+    <div>Your CGPA is <%= @cgpa %></div>
+<% end %>
 <br>
 
 <% if current_user.admin %>
